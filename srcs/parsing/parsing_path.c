@@ -6,14 +6,14 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 02:49:59 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/11 06:07:39 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/12 02:12:29 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 
-void	valid_path(char **map, t_error *error)
-{
+// void	valid_path(char **map, t_error *error)
+// {
 	
-}
+// }

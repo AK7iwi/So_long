@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,25 +7,30 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/11 04:52:33 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/12 02:07:20 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
+// void	valid_path(char **map, t_error *error)
+// {
+	
+// }
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
+// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+// 	char	*dst;
+
+// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+// 	*(unsigned int*)dst = color;
+// }
 
 void so_long()
 {
-	// void	*mlx;
-	// void	*mlx_win;
-	// t_data	img;
+// 	void	*mlx;
+// 	void	*mlx_win;
+// 	t_data	img;
 
 	// mlx = mlx_init();
 	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
@@ -39,28 +45,55 @@ void so_long()
 
 int main(int argc, char **argv)
 {
-    t_error *error;
-	char **map;
-	uint8_t	nb_lines;
+    t_data		data;
+    t_error		error;
+	uint8_t		nb_lines;
     
-    error = malloc(sizeof(t_error));
-	if(!error)
-		return(0);
-	ft_bzero(error, 5);
-	if(argc != 2)
-		error->error |= ERROR_ARG;
-	else if (is_ber(argv) == 1)
-		error->error  |= ERROR_BER;
-	nb_lines = count_lines(argv,error);
-	if(!(error->error | 0))
+	ft_bzero(&data, sizeof(t_data));
+	ft_bzero(&error, sizeof(t_error));
+	data.error = &error;
+	parsing_file(argc, argv, data.error);
+	if (!data.error->error_g)
 	{
-		map = cpy_map(argv, nb_lines,error);
-		parsing_map(map, nb_lines, error);
+		nb_lines = count_lines(argv, data.error);
+		data.map = cpy_map(argv, nb_lines, data.error);
+		parsing_map(&data, nb_lines);
 	}
-	if(!(error->error | 0))
+	if(!data.error->error_g)
         so_long();
 	else
-		parsing_msg_error(error);
-	free_all(map, error);
+		parsing_msg_error(data.error);
+	free_all(&data);
     return(0);
 }
+
+/* testing */
+
+// void	fake(t_error *error) {
+// 	error->error_g = 4;
+// }
+
+// void	fake2(t_data *data) {
+// 	data->endian = 42;
+// }
+
+// void	fake3(t_data *data) {
+// 	data->error->exit = 75;
+// }
+
+// printf("avant %d\n", error.error_g);
+// fake(data.error);
+// printf("apres %d\n", error.error_g);
+// printf("------------\n");
+
+// printf("avant %d\n", data.endian);
+// fake2(&data);
+// printf("apres %d\n", data.endian);
+// printf("------------\n");
+
+// printf("avant %d\n", data.error->exit);
+// fake3(&data);
+// printf("apres %d\n", data.error->exit);
+// printf("------------\n");
+
+

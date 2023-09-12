@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 10:30:49 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/11 05:10:24 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/12 05:12:02 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	ft_putchar_fd(char c, int fd)
 void	verif_ex_col_pos(t_error *error)
 {
 	if(error->exit != 1)
-		error->error |= ERROR_EXIT;
+		error->error_g |= ERROR_EXIT;
     if(error->position != 1)
-		error->error |= ERROR_POS;
+		error->error_g |= ERROR_POS;
 	if(error->collectibles < 1)
-		error->error |= ERROR_COL;
+		error->error_g |= ERROR_COL;
 }
 
 void	count_ex_col_pos(char *str, t_error *error)
@@ -52,20 +52,18 @@ void	count_ex_col_pos(char *str, t_error *error)
             error->collectibles++;
         else if (str[i] != 'E' && str[i] != 'P' && str[i] != 'C' 
         && str[i] != '1' && str[i] != '0')
-			error->error |= ERROR_CHAR;
+			error->error_g |= ERROR_CHAR;
 		i++;
     }
 }
 
-void	ft_bzero(void *s, size_t n)
-{
-	char	*str;
 
-	str = s;
-	while (n)
+int verif_fd(int fd, t_error *error)
+{
+	if(fd < 0 || fd > 1024)
 	{
-		*str = 0;
-		str++;
-		n--;
+		error->error_g |= ERROR_FD;
+		return(1);
 	}
+	return(0);
 }

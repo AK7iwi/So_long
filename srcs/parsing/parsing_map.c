@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:49:00 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/11 05:11:19 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/12 02:10:45 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void    verif_middle_lines(char *map, size_t len, t_error *error)
 	if (len_str < len)
     {	
 		if(map[0] != '1') 
-        	error->error |= ERROR_WALL;
+        	error->error_g |= ERROR_WALL;
 	}
 	else if(len_str >= len)
 	{
 		if(map[0] != '1' || map[len - 2] != '1') 
-        	error->error |= ERROR_WALL;
+        	error->error_g |= ERROR_WALL;
 	}
 	if(len_str != len)
-		error->error |= ERROR_RECT;
+		error->error_g |= ERROR_RECT;
 	count_ex_col_pos(map ,error);
 }
 
@@ -52,53 +52,53 @@ void    verif_first_and_last_line(char *map, size_t len, int line ,t_error *erro
     while(i < len_t - 1) 
     {
         if(map[i] != '1')
-        	error->error |= ERROR_WALL;
+        	error->error_g |= ERROR_WALL;
         i++;
     }
 	if(len_str != len - 1)
-		error->error |= ERROR_RECT;	
+		error->error_g |= ERROR_RECT;	
 }
 
-void	parsing_map(char **map, uint8_t nb_lines, t_error *error)
+void	parsing_map(t_data *data, uint8_t nb_lines)
 {
 	uint8_t	line;
 	uint8_t len;
 
 	line = 0;
-	len = ft_strlen(map[line]);
+	len = ft_strlen(data->map[line]);
 	while (line < nb_lines)
 	{
 		if(line == 0 || line == nb_lines - 1)
-			verif_first_and_last_line(map[line], len, line, error);
+			verif_first_and_last_line(data->map[line], len, line, data->error);
 		else
-			verif_middle_lines(map[line], len, error);
+			verif_middle_lines(data->map[line], len, data->error);
 		line++;
 	}
-	verif_ex_col_pos(error);
+	verif_ex_col_pos(data->error);
 	// valid_path()
 }
 
 void parsing_msg_error(t_error *error)
 {
-	if(error->error & ERROR_ARG)
+	if(error->error_g & ERROR_ARG)
 		ft_putstr_fd("Error\nIncorrect Number of argument", 1);
-	if(error->error & ERROR_BER)
+	if(error->error_g & ERROR_BER)
 		ft_putstr_fd("Error\nIncorrect Format", 1);
-	if(error->error & ERROR_FD)
+	if(error->error_g & ERROR_FD)
 		ft_putstr_fd("Error\nIncorrect FD", 1);
-	if(error->error & ERROR_EMPTY)
+	if(error->error_g & ERROR_EMPTY)
 		ft_putstr_fd("Error\nIncorrect map or empty map", 1);
-	if(error->error & ERROR_RECT)
+	if(error->error_g & ERROR_RECT)
 		ft_putstr_fd("Error\nIncorrect Rect", 1);
-	if(error->error & ERROR_WALL)
+	if(error->error_g & ERROR_WALL)
 		ft_putstr_fd("Error\nInvalid Walls", 1);
-	if(error->error & ERROR_POS)
+	if(error->error_g & ERROR_POS)
 		ft_putstr_fd("Error\nIncorrect Start", 1);		
-	if(error->error & ERROR_EXIT)
+	if(error->error_g & ERROR_EXIT)
 		ft_putstr_fd("Error\nIncorrect Exit", 1);
-	if(error->error	& ERROR_COL)
+	if(error->error_g	& ERROR_COL)
 		ft_putstr_fd("Error\nIncorrect Collectibles", 1);
-	if(error->error & ERROR_CHAR)
+	if(error->error_g & ERROR_CHAR)
 		ft_putstr_fd("Error\nIncorrect Char", 1);
 	
 }
