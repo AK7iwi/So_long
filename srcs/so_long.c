@@ -13,87 +13,235 @@
 
 #include "so_long.h"
 
-// void	valid_path(char **map, t_error *error)
-// {
-	
-// }
-
-// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-// 	*(unsigned int*)dst = color;
-// }
-
-void so_long()
+/* check valid and same height/width of each image */
+bool	img_init(t_data *data)
 {
-// 	void	*mlx;
-// 	void	*mlx_win;
-// 	t_data	img;
+	data->wall_img = mlx_xpm_file_to_image(data->mlx, "./img/wall.xpm", &data->widht_per_image, &data->height_per_image);
+	if (!data->wall_img)
+		return (EXIT_FAILURE);
+	
+	data->ground_img = mlx_xpm_file_to_image(data->mlx, "./img/ground.xpm", &data->widht_per_image, &data->height_per_image);
+	if (!data->ground_img)
+		return (EXIT_FAILURE);
+	
+	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./img/exit.xpm", &data->widht_per_image, &data->height_per_image);
+	if (!data->exit_img)
+		return (EXIT_FAILURE);
+	
+	data->coll_img = mlx_xpm_file_to_image(data->mlx, "./img/coll.xpm", &data->widht_per_image, &data->height_per_image);
+	if (!data->coll_img)
+		return (EXIT_FAILURE);
+	
+	data->player_img = mlx_xpm_file_to_image(data->mlx, "./img/player.xpm", &data->widht_per_image, &data->height_per_image);
+	if (!data->player_img)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 
-	// mlx = mlx_init();
-	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	// img.img = mlx_new_image(mlx, 1920, 1080);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-	// 							&img.endian);
-	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	// mlx_loop(mlx);
-	ft_putstr_fd("So_long", 1);
+}
+
+bool game_init(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		return (EXIT_FAILURE);
+	if (!img_init(data))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+void	print_block(t_data *data, uint8_t y, uint8_t x)
+{
+	char c;
+
+	c = data->map[y][x];
+	if (c == '1')
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->wall_img, x * data->widht_per_image, y * data->height_per_image);
+	else if (c == '0')
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->ground_img, x * data->widht_per_image, y * data->height_per_image);
+	else if (c == 'C')
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->coll_img, x * data->widht_per_image, y * data->height_per_image);
+	else if (c == 'E')
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->exit_img, x * data->widht_per_image, y * data->height_per_image);
+	else if (c == 'P')
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->player_img, x * data->widht_per_image, y * data->height_per_image);
+}
+
+void	print_map(t_data *data)
+{
+	uint8_t i;
+	uint8_t j;
+
+	i = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			print_block(data, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	find_player_position(t_data *data)
+{
+	uint8_t i;
+	uint8_t j;
+
+	i = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] == 'P')
+			{
+				data->player_y = i;
+				data->player_x = j;
+
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+bool	check_if_coll_are_present(t_data *data)
+{
+	uint8_t i;
+	uint8_t j;
+
+	i = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] == 'C')
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	move_top(t_data *data)
+{
+	if (data->map[data->player_y - 1][data->player_x ] == 'E')
+	{
+		if (!check_if_coll_are_present(data))
+			return (free_mlx(data));
+	}
+	else if (data->map[data->player_y - 1][data->player_x] != '1')
+	{
+		data->map[data->player_y - 1][data->player_x] = 'P';
+		data->map[data->player_y][data->player_x] = '0';
+		printf("%d\n", ++data->nb_moves);
+		data->player_y--;
+	}
+}
+
+void	move_down(t_data *data)
+{
+	if (data->map[data->player_y + 1][data->player_x] == 'E')
+	{
+		if (!check_if_coll_are_present(data))
+			return (free_mlx(data));
+	}
+	else if (data->map[data->player_y + 1][data->player_x] != '1')
+	{
+		data->map[data->player_y + 1][data->player_x] = 'P';
+		data->map[data->player_y][data->player_x] = '0';
+		printf("%d\n", ++data->nb_moves);
+		data->player_y++;
+	}
+}
+
+void	move_left(t_data *data)
+{
+	if (data->map[data->player_y][data->player_x - 1] == 'E')
+	{
+		if (!check_if_coll_are_present(data))
+			return (free_mlx(data));
+	}
+	else if (data->map[data->player_y][data->player_x - 1] != '1')
+	{
+		data->map[data->player_y][data->player_x - 1] = 'P';
+		data->map[data->player_y][data->player_x] = '0';
+		printf("%d\n", ++data->nb_moves);
+		data->player_x--;
+	}
+}
+
+void	move_right(t_data *data)
+{
+	if (data->map[data->player_y][data->player_x + 1] == 'E')
+	{
+		if (!check_if_coll_are_present(data))
+			return (free_mlx(data));
+	}
+	else if (data->map[data->player_y][data->player_x + 1] != '1')
+	{
+		data->map[data->player_y][data->player_x + 1] = 'P';
+		data->map[data->player_y][data->player_x] = '0';
+		printf("%d\n", ++data->nb_moves);
+		data->player_x++;
+	}
+}
+
+void	move_player(int keycode, t_data *data)
+{
+	if (keycode == MOVE_UP)
+		move_top(data);
+	else if (keycode == MOVE_DOWN)
+		move_down(data);
+	else if (keycode == MOVE_LEFT)
+		move_left(data);
+	else if (keycode == MOVE_RIGHT)
+		move_right(data);
+	else if (keycode == ESC)
+		free_mlx(data);
+	print_map(data);
+}
+// add one 
+void	start_game(t_data *data)
+{
+	find_player_position(data);
+	data->mlx_win = mlx_new_window(data->mlx, 64 * data->map_len_x, 64 * data->map_len_y, "so_long");
+	print_map(data);
+	mlx_key_hook(data->mlx_win, (void *)move_player, data);
+	mlx_hook(data->mlx_win, 17, 0, (void *)free_mlx, data);
+	mlx_loop(data->mlx);
 }
 
 int main(int argc, char **argv)
 {
     t_data		data;
     t_error		error;
-	uint8_t		nb_lines;
     
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&error, sizeof(t_error));
 	data.error = &error;
+	
 	parsing_file(argc, argv, data.error);
 	if (!data.error->error_g)
+		data.map_len_y = count_lines(argv, data.error);
+	if (!data.error->error_g)
+		data.map = cpy_map(argv, data.map_len_y, data.error);
+	if (!data.error->error_g)
+		parsing_map(&data, data.map_len_y);
+	if (!data.error->error_g)
 	{
-		nb_lines = count_lines(argv, data.error);
-		data.map = cpy_map(argv, nb_lines, data.error);
-		parsing_map(&data, nb_lines);
+        if (game_init(&data))
+			start_game(&data);
 	}
-	if(!data.error->error_g)
-        so_long();
 	else
 		parsing_msg_error(data.error);
-	free_all(&data);
+	free_mlx(&data);
     return(0);
 }
-
-/* testing */
-
-// void	fake(t_error *error) {
-// 	error->error_g = 4;
-// }
-
-// void	fake2(t_data *data) {
-// 	data->endian = 42;
-// }
-
-// void	fake3(t_data *data) {
-// 	data->error->exit = 75;
-// }
-
-// printf("avant %d\n", error.error_g);
-// fake(data.error);
-// printf("apres %d\n", error.error_g);
-// printf("------------\n");
-
-// printf("avant %d\n", data.endian);
-// fake2(&data);
-// printf("apres %d\n", data.endian);
-// printf("------------\n");
-
-// printf("avant %d\n", data.error->exit);
-// fake3(&data);
-// printf("apres %d\n", data.error->exit);
-// printf("------------\n");
 
 

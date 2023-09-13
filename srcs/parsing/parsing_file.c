@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 16:11:47 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/12 05:19:38 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/13 00:55:39 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char **cpy_map(char **argv, int nb_lines, t_error *error)
 	char	**map;
 	uint8_t i;
 	
+	i = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (verif_fd(fd, error) == 1)
 		return(NULL);
-	i = 0;
 	map = malloc(sizeof(char *) * (nb_lines + 1));
 	map[i] = get_next_line(fd);
 	while(++i < nb_lines + 1)
@@ -32,27 +32,27 @@ char **cpy_map(char **argv, int nb_lines, t_error *error)
 int	count_lines(char **argv, t_error *error)
 {
 	int 	fd;
-	char	*str;
-	uint8_t	line;
+	char	*line;
+	uint8_t	count_line;
 	
 	fd = open(argv[1], O_RDONLY);
-	if (verif_fd(fd, error) == 1)
-		return(-1);
-	line = 0; 
-	str = get_next_line(fd);
-	if(!str)
-		error->error_g |= ERROR_EMPTY;
-	while (str)
+	if (verif_fd(fd, error) == 1) 
+		return (EXIT_FAILURE);
+	count_line = 0; 
+	line = get_next_line(fd);
+	if (!line)
+		return (error->error_g |= ERROR_EMPTY, EXIT_FAILURE);
+	while (line)
 	{	
-		line++;
-		free(str);
-		str = get_next_line(fd);
+		count_line++;
+		free(line);
+		line = get_next_line(fd);
 	}
-	free(str);
+	free(line);
 	close(fd);
-	if(line < 3)
+	if(count_line < 3)
 		error->error_g |= ERROR_EMPTY;
-	return (line);
+	return (count_line);
 }
 
 int		is_ber(char **argv)

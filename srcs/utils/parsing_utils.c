@@ -6,25 +6,29 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 10:30:49 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/12 05:12:02 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/13 02:45:07 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void remove_n(char **map)
 {
-	int	i;
+	uint8_t i;
+	uint8_t j;
 
 	i = 0;
-	while (s[i])
-		ft_putchar_fd(s[i++], fd);
-	ft_putchar_fd('\n', 1);
-}
-
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
+	while(map[i])
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if(map[i][j] == '\n' || map[i][j] == '\r')
+				map[i][j] = '\0';
+			j++;
+		}
+		i++;
+	}
 }
 
 void	verif_ex_col_pos(t_error *error)
@@ -56,7 +60,6 @@ void	count_ex_col_pos(char *str, t_error *error)
 		i++;
     }
 }
-
 
 int verif_fd(int fd, t_error *error)
 {

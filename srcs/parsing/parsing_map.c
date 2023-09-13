@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:49:00 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/12 02:10:45 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/13 07:33:25 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    verif_middle_lines(char *map, size_t len, t_error *error)
 	}
 	else if(len_str >= len)
 	{
-		if(map[0] != '1' || map[len - 2] != '1') 
+		if(map[0] != '1' || map[len - 1] != '1') 
         	error->error_g |= ERROR_WALL;
 	}
 	if(len_str != len)
@@ -32,22 +32,17 @@ void    verif_middle_lines(char *map, size_t len, t_error *error)
 	count_ex_col_pos(map ,error);
 }
 
-void    verif_first_and_last_line(char *map, size_t len, int line ,t_error *error)
+void    verif_first_and_last_line(char *map, size_t len,t_error *error)
 {
 	size_t len_str;
 	size_t len_t;
 	size_t i;
 	
     i = 0;
-	if(line == 0)
-	{
-		if(map[len - 1] == '\n' || map[len - 1] == '\r')
-			map[len - 1] = '\0';
-	}
 	len_str = ft_strlen(map); 
-	if(len_str < len - 1)
+	if(len_str < len)
 		len_t = len_str;
-	else if(len_str >= len - 1 )
+	else if(len_str >= len)
 		len_t = len; 
     while(i < len_t - 1) 
     {
@@ -55,7 +50,7 @@ void    verif_first_and_last_line(char *map, size_t len, int line ,t_error *erro
         	error->error_g |= ERROR_WALL;
         i++;
     }
-	if(len_str != len - 1)
+	if(len_str != len)
 		error->error_g |= ERROR_RECT;	
 }
 
@@ -65,17 +60,21 @@ void	parsing_map(t_data *data, uint8_t nb_lines)
 	uint8_t len;
 
 	line = 0;
+	remove_n(data->map);
 	len = ft_strlen(data->map[line]);
 	while (line < nb_lines)
 	{
 		if(line == 0 || line == nb_lines - 1)
-			verif_first_and_last_line(data->map[line], len, line, data->error);
+			verif_first_and_last_line(data->map[line], len, data->error);
 		else
 			verif_middle_lines(data->map[line], len, data->error);
 		line++;
 	}
 	verif_ex_col_pos(data->error);
-	// valid_path()
+	data->map_len_x = len;
+	data->map_len_y = nb_lines;
+	// if (!data->error->error_g)
+		// valid_path(data->map, data->error);
 }
 
 void parsing_msg_error(t_error *error)
