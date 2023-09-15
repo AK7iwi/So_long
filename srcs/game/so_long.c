@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/14 06:10:06 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:19:42 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	main(int argc, char **argv)
 		if (!valid_path(&data, data.player_x, data.player_y))
 			data.error->error_g |= ERROR_NO_VALID_PATH;
 	reset_matrix_map(&data);
+	find_exit_position(&data);
 	if (!data.error->error_g)
 		prestart_game(&data);
 	else

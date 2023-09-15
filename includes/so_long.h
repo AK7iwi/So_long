@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:41:14 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/14 06:10:57 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/15 11:55:37 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct s_data
 	void	*player_img;
 	uint8_t	player_x;
 	uint8_t	player_y;
+	uint8_t	exit_x;
+	uint8_t	exit_y;
 	uint8_t	nb_moves;
 	int		height_per_image;
 	int		widht_per_image;
@@ -137,6 +139,7 @@ void	find_player_position(t_data *data);
 void	reset_matrix_map(t_data *data);
 void	print_map(t_data *data);
 void	print_block(t_data *data, uint8_t y, uint8_t x);
+void	find_exit_position(t_data *data);
 bool	check_if_coll_are_present(t_data *data);
 void	free_map(t_data *data);
 void	free_mlx(t_data *data);
