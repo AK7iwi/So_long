@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:32:47 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/15 23:36:43 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 04:41:31 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,6 @@ void	move_right(t_data *data)
 
 void	move_player(int keycode, t_data *data)
 {
-	if(!check_if_coll_are_present(data))
-	{
-		data->map[data->exit_y][data->exit_x] = 'E';
-		print_map(data);
-	}
 	if (keycode == MOVE_UP)
 		move_up(data);
 	else if (keycode == MOVE_DOWN)
@@ -113,5 +108,7 @@ void	move_player(int keycode, t_data *data)
 		move_right(data);
 	else if (keycode == ESC)
 		free_mlx(data);
+	if (!check_if_coll_are_present(data))
+		data->map[data->exit_y][data->exit_x] = 'E';
 	print_map(data);
 }

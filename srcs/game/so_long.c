@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/15 12:19:42 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 04:53:45 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	start_game(t_data *data)
 {
-	find_player_position(data);
 	data->mlx_win = mlx_new_window(data->mlx,
 			data->widht_per_image * data->map_len_x,
 			data->height_per_image * data->map_len_y, "so_long");

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 03:01:16 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/15 12:08:37 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 03:47:21 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,34 +46,10 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 }
 
-void	find_exit_position(t_data *data)
-{
-	uint8_t	i;
-	uint8_t	j;
-
-	i = 0;
-	while (data->map[i])
-	{
-		j = 0;
-		while (data->map[i][j])
-		{
-			if (data->map[i][j] == 'E')
-			{
-				data->exit_y = i;
-				data->exit_x = j;
-				data->map[data->exit_y][data->exit_x] = '0';
-				return ;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
 void	print_block(t_data *data, uint8_t y, uint8_t x)
 {
 	char	c;
-	
+
 	c = data->map[y][x];
 	if (c == '1')
 		mlx_put_image_to_window(data->mlx, data->mlx_win, data->wall_img,

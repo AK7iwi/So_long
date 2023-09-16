@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:36:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/15 12:11:36 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 03:42:52 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	check_if_coll_are_present(t_data *data)
 	return (0);
 }
 
-void	reset_matrix_map(t_data *data)
+void	find_exit_position(t_data *data)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -43,8 +43,13 @@ void	reset_matrix_map(t_data *data)
 		j = 0;
 		while (data->map[i][j])
 		{
-			if (data->map[i][j] < 0)
-				data->map[i][j] *= -1;
+			if (data->map[i][j] == 'E')
+			{
+				data->exit_y = i;
+				data->exit_x = j;
+				data->map[data->exit_y][data->exit_x] = '0';
+				return ;
+			}
 			j++;
 		}
 		i++;

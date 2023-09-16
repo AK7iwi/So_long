@@ -6,51 +6,49 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:49:00 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/14 04:32:25 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 03:29:42 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	verif_middle_lines(char *map, size_t len, t_error *error)
+void	verif_middles_lines(char *str, size_t len, t_error *error)
 {
 	size_t	len_str;
 
-	len_str = ft_strlen(map);
+	len_str = ft_strlen(str);
 	if (len_str < len)
 	{
-		if (map[0] != '1')
+		if (str[0] != '1')
 			error->error_g |= ERROR_WALL;
+		error->error_g |= ERROR_RECT;
 	}
 	else if (len_str >= len)
 	{
-		if (map[0] != '1' || map[len - 1] != '1')
+		if (str[0] != '1' || str[len - 1] != '1')
 			error->error_g |= ERROR_WALL;
 	}
-	if (len_str != len)
-		error->error_g |= ERROR_RECT;
-	count_ex_col_pos(map, error);
 }
 
-void	verif_first_and_last_line(char *map, size_t len, t_error *error)
+void	verif_first_and_last_line(char *str, size_t len, t_error *error)
 {
 	size_t	len_str;
 	size_t	len_t;
-	size_t	i;
+	uint8_t	i;
 
 	i = 0;
-	len_str = ft_strlen(map);
+	len_str = ft_strlen(str);
 	if (len_str < len)
 		len_t = len_str;
 	else if (len_str >= len)
 		len_t = len;
-	while (i < len_t - 1)
+	while (i < len_t)
 	{
-		if (map[i] != '1')
+		if (str[i] != '1')
 			error->error_g |= ERROR_WALL;
 		i++;
 	}
-	if (len_str != len)
+	if (len_wall(str) != len)
 		error->error_g |= ERROR_RECT;
 }
 
@@ -61,15 +59,16 @@ void	parsing_map(t_data *data, uint8_t nb_lines)
 
 	line = 0;
 	remove_n(data->map);
-	len = ft_strlen(data->map[line]);
-	while (line < nb_lines)
+	len = len_wall(data->map[line]);
+	while (data->map[line])
 	{
 		if (line == 0 || line == nb_lines - 1)
 			verif_first_and_last_line(data->map[line], len, data->error);
 		else
-			verif_middle_lines(data->map[line], len, data->error);
+			verif_middles_lines(data->map[line], len, data->error);
 		line++;
 	}
+	count_ex_col_pos(data, data->error, len);
 	verif_ex_col_pos(data->error);
 	data->map_len_x = len;
 	data->map_len_y = nb_lines;
