@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 10:30:49 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 03:47:09 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 23:29:37 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	verif_ex_col_pos(t_error *error)
 		error->error_g |= ERROR_COL;
 }
 
-void	count_ex_col_pos(t_data *data, t_error *error, uint8_t len)
+void	count_ex_col_pos(t_data *data, t_error *error)
 {
 	uint8_t	i;
 	uint8_t	j;
@@ -31,7 +31,7 @@ void	count_ex_col_pos(t_data *data, t_error *error, uint8_t len)
 	while (data->map[i])
 	{
 		j = 0;
-		while (data->map[i][j] && j < len)
+		while (data->map[i][j])
 		{
 			if (data->map[i][j] == 'E')
 				error->exit ++;

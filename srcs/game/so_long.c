@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 04:53:45 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 01:12:03 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ int	main(int argc, char **argv)
 		data.map = cpy_map(argv, data.map_len_y, data.error);
 	if (!data.error->error_g)
 		parsing_map(&data, data.map_len_y);
-	find_player_position(&data);
 	if (!data.error->error_g)
-		if (!valid_path(&data, data.player_x, data.player_y))
+		if (is_valid_path(&data))
 			data.error->error_g |= ERROR_NO_VALID_PATH;
 	reset_matrix_map(&data);
 	find_exit_position(&data);

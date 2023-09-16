@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:49:00 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 03:29:42 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 23:21:47 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	verif_middles_lines(char *str, size_t len, t_error *error)
 	{
 		if (str[0] != '1' || str[len - 1] != '1')
 			error->error_g |= ERROR_WALL;
+		if (len_str > len)
+			error->error_g |= ERROR_RECT ;
 	}
 }
 
@@ -48,7 +50,7 @@ void	verif_first_and_last_line(char *str, size_t len, t_error *error)
 			error->error_g |= ERROR_WALL;
 		i++;
 	}
-	if (len_wall(str) != len)
+	if (len_str != len)
 		error->error_g |= ERROR_RECT;
 }
 
@@ -59,7 +61,7 @@ void	parsing_map(t_data *data, uint8_t nb_lines)
 
 	line = 0;
 	remove_n(data->map);
-	len = len_wall(data->map[line]);
+	len = ft_strlen(data->map[line]);
 	while (data->map[line])
 	{
 		if (line == 0 || line == nb_lines - 1)
@@ -68,7 +70,7 @@ void	parsing_map(t_data *data, uint8_t nb_lines)
 			verif_middles_lines(data->map[line], len, data->error);
 		line++;
 	}
-	count_ex_col_pos(data, data->error, len);
+	count_ex_col_pos(data, data->error);
 	verif_ex_col_pos(data->error);
 	data->map_len_x = len;
 	data->map_len_y = nb_lines;
@@ -76,27 +78,27 @@ void	parsing_map(t_data *data, uint8_t nb_lines)
 
 void	parsing_msg_error(t_error *error)
 {
-	ft_putstr_fd("Error", 1);
+	ft_putstr_fd("Error\n", 1);
 	if (error->error_g & ERROR_ARG)
-		ft_putstr_fd("- Incorrect number of argument", 1);
+		ft_putstr_fd("- Incorrect number of argument\n", 1);
 	if (error->error_g & ERROR_BER)
-		ft_putstr_fd("- Incorrect format", 1);
+		ft_putstr_fd("- Incorrect format\n", 1);
 	if (error->error_g & ERROR_FD)
-		ft_putstr_fd("- Incorrect FD", 1);
+		ft_putstr_fd("- Incorrect FD\n", 1);
 	if (error->error_g & ERROR_EMPTY)
-		ft_putstr_fd("- Incorrect map or empty map", 1);
+		ft_putstr_fd("- Incorrect map or empty map\n", 1);
 	if (error->error_g & ERROR_RECT)
-		ft_putstr_fd("- Incorrect rectangle", 1);
+		ft_putstr_fd("- Incorrect rectangle\n", 1);
 	if (error->error_g & ERROR_WALL)
-		ft_putstr_fd("- Incorrect walls", 1);
+		ft_putstr_fd("- Incorrect walls\n", 1);
 	if (error->error_g & ERROR_POS)
-		ft_putstr_fd("- Incorrect start", 1);
+		ft_putstr_fd("- Incorrect start\n", 1);
 	if (error->error_g & ERROR_EXIT)
-		ft_putstr_fd("- Incorrect exit", 1);
+		ft_putstr_fd("- Incorrect exit\n", 1);
 	if (error->error_g & ERROR_COL)
-		ft_putstr_fd("- Incorrect collectibles", 1);
+		ft_putstr_fd("- Incorrect collectibles\n", 1);
 	if (error->error_g & ERROR_CHAR)
-		ft_putstr_fd("- Incorrect characters", 1);
+		ft_putstr_fd("- Incorrect characters\n", 1);
 	if (error->error_g & ERROR_NO_VALID_PATH)
-		ft_putstr_fd("- Incorrect path", 1);
+		ft_putstr_fd("- Incorrect path\n", 1);
 }

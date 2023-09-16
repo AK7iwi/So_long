@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 03:01:16 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 03:47:21 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:29:18 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	while (s[i])
 		ft_putchar_fd(s[i++], fd);
-	ft_putchar_fd('\n', 1);
 }
 
 void	ft_putnbr_fd(int n, int fd)

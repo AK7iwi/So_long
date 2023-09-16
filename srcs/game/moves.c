@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:32:47 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 04:41:31 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:50:15 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	move_up(t_data *data)
 		{
 			ft_putnbr_fd(++data->nb_moves, 1);
 			ft_putchar_fd('\n', 1);
+			ft_putstr_fd("Game finished in: ", 1);
+			ft_putnbr_fd(data->nb_moves, 1);
+			ft_putstr_fd(" moves", 1);
 			return (free_mlx(data));
 		}
 	}
@@ -41,6 +44,9 @@ void	move_down(t_data *data)
 		{
 			ft_putnbr_fd(++data->nb_moves, 1);
 			ft_putchar_fd('\n', 1);
+			ft_putstr_fd("Game finished in: ", 1);
+			ft_putnbr_fd(data->nb_moves, 1);
+			ft_putstr_fd(" moves", 1);
 			return (free_mlx(data));
 		}
 	}
@@ -62,6 +68,9 @@ void	move_left(t_data *data)
 		{
 			ft_putnbr_fd(++data->nb_moves, 1);
 			ft_putchar_fd('\n', 1);
+			ft_putstr_fd("Game finished in: ", 1);
+			ft_putnbr_fd(data->nb_moves, 1);
+			ft_putstr_fd(" moves", 1);
 			return (free_mlx(data));
 		}
 	}
@@ -83,6 +92,9 @@ void	move_right(t_data *data)
 		{
 			ft_putnbr_fd(++data->nb_moves, 1);
 			ft_putchar_fd('\n', 1);
+			ft_putstr_fd("Game finished in: ", 1);
+			ft_putnbr_fd(data->nb_moves, 1);
+			ft_putstr_fd(" moves", 1);
 			return (free_mlx(data));
 		}
 	}

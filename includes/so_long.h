@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:41:14 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 04:48:46 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 01:06:27 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_data
 	uint8_t	player_y;
 	uint8_t	exit_x;
 	uint8_t	exit_y;
+	uint8_t	coll;
 	int		nb_moves;
 	int		height_per_image;
 	int		widht_per_image;
@@ -94,16 +95,17 @@ void	parsing_file(int argc, char **argv, t_error *error);
 void	parsing_map(t_data *data, uint8_t nb_lines);
 void	verif_first_and_last_line(char *str, size_t len, t_error *error);
 void	verif_middles_lines(char *str, size_t len, t_error *error);
-void	count_ex_col_pos(t_data *data, t_error *error, uint8_t len);
+void	count_ex_col_pos(t_data *data, t_error *error);
 void	verif_ex_col_pos(t_error *error);
-bool	valid_path(t_data *data, uint8_t player_x, uint8_t player_y);
 void	parsing_msg_error(t_error *error);
 
 /* Valid path parsing*/
 
-bool	valid_path(t_data *data, uint8_t player_x, uint8_t player_y);
+bool	valid_path_exit(t_data *data, uint8_t player_x, uint8_t player_y);
 bool	is_valid_char_pathfinding(t_data *data, uint8_t player_x,
 			uint8_t player_y);
+bool	valid_path_coll(t_data *data, uint8_t player_x, uint8_t player_y);
+bool	is_valid_path(t_data *data);
 
 /* Utils Parsing */
 
