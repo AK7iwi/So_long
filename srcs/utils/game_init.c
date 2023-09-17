@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:44:05 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 03:42:39 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 02:39:18 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ bool	img_init(t_data *data)
 
 bool	m_mlx_init(t_data *data)
 {
+	if (!data->map)
+		return (EXIT_FAILURE);
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		return (EXIT_FAILURE);

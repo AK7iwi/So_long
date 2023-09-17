@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 10:30:49 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 23:29:37 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 02:10:49 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,6 @@ void	count_ex_col_pos(t_data *data, t_error *error)
 	}
 }
 
-uint8_t	len_wall(char *str)
-{
-	uint8_t	len;
-	uint8_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '1')
-			break ;
-		i++;
-	}
-	len = i;
-	return (len);
-}
-
 void	remove_n(char **map)
 {
 	uint8_t	i;
@@ -88,7 +72,7 @@ bool	verif_fd(int fd, t_error *error)
 {
 	if (fd < 0 || fd > 1024)
 	{
-		error->error_g |= ERROR_FD;
+		error->error_g |= ERROR_FILE;
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:41:14 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 01:06:27 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 02:12:25 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,21 @@
 # include <stdbool.h>
 
 /* Gnl */
-
 # define BUFFER_SIZE 42
 
 /* Error code */
-
-# define ERROR_ARG				0x1
-# define ERROR_BER				0x2
-# define ERROR_FD				0x4
-# define ERROR_EMPTY			0x8
-# define ERROR_RECT				0x10
-# define ERROR_WALL				0x20
-# define ERROR_POS				0x40
-# define ERROR_EXIT				0x80
-# define ERROR_COL				0x100
-# define ERROR_CHAR				0x200
-# define ERROR_NO_VALID_PATH	0x400
+# define ERROR_FILE				0x1
+# define ERROR_ARG				0x2
+# define ERROR_EMPTY			0x4
+# define ERROR_RECT				0x8
+# define ERROR_WALL				0x10
+# define ERROR_POS				0x20
+# define ERROR_EXIT				0x40
+# define ERROR_COL				0x80
+# define ERROR_CHAR				0x100
+# define ERROR_NO_VALID_PATH	0x200
 
 /* Keycode */
-
 # define MOVE_LEFT	65361
 # define MOVE_UP	65362
 # define MOVE_RIGHT 65363
@@ -82,7 +78,6 @@ typedef struct s_data
 }				t_data;
 
 /* GNL */
-
 char	*get_next_line(int fd);
 char	*ft_stock(char *stock, char *buf);
 int		ft_lignefin(char *buf);
@@ -90,8 +85,7 @@ size_t	ft_strlen(char *s);
 char	*ft_strjoin(char *s1, char *s2);
 
 /* Parsing */
-
-void	parsing_file(int argc, char **argv, t_error *error);
+int		parsing_file(int argc, char **argv, t_error *error);
 void	parsing_map(t_data *data, uint8_t nb_lines);
 void	verif_first_and_last_line(char *str, size_t len, t_error *error);
 void	verif_middles_lines(char *str, size_t len, t_error *error);
@@ -100,7 +94,6 @@ void	verif_ex_col_pos(t_error *error);
 void	parsing_msg_error(t_error *error);
 
 /* Valid path parsing*/
-
 bool	valid_path_exit(t_data *data, uint8_t player_x, uint8_t player_y);
 bool	is_valid_char_pathfinding(t_data *data, uint8_t player_x,
 			uint8_t player_y);
@@ -108,25 +101,20 @@ bool	valid_path_coll(t_data *data, uint8_t player_x, uint8_t player_y);
 bool	is_valid_path(t_data *data);
 
 /* Utils Parsing */
-
-int		is_ber(char **argv);
 bool	verif_fd(int fd, t_error *error);
 void	remove_n(char **map);
-uint8_t	len_wall(char *str);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
 /* Init game */
-
 void	ft_bzero(void *s, size_t n);
+void	prestart_game(t_data *data, char **argv);
 bool	m_mlx_init(t_data *data);
 bool	img_init(t_data *data);
 bool	img_init2(t_data *data, int verif_wpi, int verif_hpi);
 
 /*Game */
-
-void	prestart_game(t_data *data);
 void	start_game(t_data *data);
 void	move_player(int keycode, t_data *data);
 void	move_right(t_data *data);
@@ -135,7 +123,6 @@ void	move_down(t_data *data);
 void	move_up(t_data *data);
 
 /*Utils Game*/
-
 int		count_lines(char **argv, t_error *error);
 char	**cpy_map(char **argv, int nb_lines, t_error *error);
 void	find_player_position(t_data *data);

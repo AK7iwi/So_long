@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:36:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/16 03:42:52 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 02:46:50 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ char	**cpy_map(char **argv, int nb_lines, t_error *error)
 	if (verif_fd(fd, error) == 1)
 		return (NULL);
 	map = malloc(sizeof(char *) * (nb_lines + 1));
+	if (!map)
+		return (NULL);
 	map[i] = get_next_line(fd);
 	while (++i < nb_lines + 1)
 		map[i] = get_next_line(fd);

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 01:12:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 02:40:06 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	start_game(t_data *data)
 {
+	find_exit_position(data);
 	data->mlx_win = mlx_new_window(data->mlx,
 			data->widht_per_image * data->map_len_x,
 			data->height_per_image * data->map_len_y, "so_long");
@@ -23,10 +24,35 @@ void	start_game(t_data *data)
 	mlx_loop(data->mlx);
 }
 
-void	prestart_game(t_data *data)
+void	prestart_game(t_data *data, char **argv)
 {
-	if (!m_mlx_init(data))
-		start_game(data);
+	if (!data->error->error_g)
+		data->map_len_y = count_lines(argv, data->error);
+	if (!data->error->error_g)
+		data->map = cpy_map(argv, data->map_len_y, data->error);
+	if (!data->map)
+		return ;
+	if (!data->error->error_g)
+		parsing_map(data, data->map_len_y);
+	if (!data->error->error_g)
+		if (is_valid_path(data))
+			data->error->error_g |= ERROR_NO_VALID_PATH;
+	if (!data->error->error_g)
+		reset_matrix_map(data);
+}
+
+int	parsing_file(int argc, char **argv, t_error *error)
+{
+	int	fd;
+
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0 || fd > 1024)
+		error->error_g |= ERROR_FILE;
+	if (argc != 2)
+		error->error_g |= ERROR_ARG;
+	if (error->error_g)
+		return (1);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -37,20 +63,17 @@ int	main(int argc, char **argv)
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&error, sizeof(t_error));
 	data.error = &error;
-	parsing_file(argc, argv, data.error);
+	if (parsing_file(argc, argv, data.error) == 1)
+	{
+		parsing_msg_error(data.error);
+		return (0);
+	}
+	prestart_game(&data, argv);
 	if (!data.error->error_g)
-		data.map_len_y = count_lines(argv, data.error);
-	if (!data.error->error_g)
-		data.map = cpy_map(argv, data.map_len_y, data.error);
-	if (!data.error->error_g)
-		parsing_map(&data, data.map_len_y);
-	if (!data.error->error_g)
-		if (is_valid_path(&data))
-			data.error->error_g |= ERROR_NO_VALID_PATH;
-	reset_matrix_map(&data);
-	find_exit_position(&data);
-	if (!data.error->error_g)
-		prestart_game(&data);
+	{
+		if (!m_mlx_init(&data))
+			start_game(&data);
+	}
 	else
 		parsing_msg_error(data.error);
 	free_mlx(&data);
