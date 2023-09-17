@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 11:53:19 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 12:30:01 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	prestart_game(t_data *data, char **argv)
 {
 	if (!data->error->error_g)
 		data->map_len_y = count_lines(argv, data->error);
-	if (data->map_len_y == 0)
+	if (!data->map_len_y)
 		return ;
 	if (!data->error->error_g)
 		data->map = cpy_map(argv, data->map_len_y, data->error);
