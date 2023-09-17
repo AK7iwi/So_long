@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 10:30:49 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 02:10:49 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 10:30:12 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ bool	verif_fd(int fd, t_error *error)
 	if (fd < 0 || fd > 1024)
 	{
 		error->error_g |= ERROR_FILE;
+		close(fd);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

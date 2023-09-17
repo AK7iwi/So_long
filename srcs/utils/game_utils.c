@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:36:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 04:07:20 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 11:55:01 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,21 @@ char	**cpy_map(char **argv, int nb_lines, t_error *error)
 {
 	int		fd;
 	char	**map;
-	uint8_t	i;
+	int		i;
 
-	i = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (verif_fd(fd, error) == 1)
 		return (NULL);
 	map = malloc(sizeof(char *) * (nb_lines + 1));
-	// map = NULL;
 	if (!map)
 		return (NULL);
-	map[i] = get_next_line(fd);
-	while (++i < nb_lines + 1)
+	i = 0;
+	while (i < nb_lines)
+	{
 		map[i] = get_next_line(fd);
+		i++;
+	}
+	map[i] = NULL;
 	return (map);
 }
 
@@ -108,10 +110,10 @@ int	count_lines(char **argv, t_error *error)
 	fd = open(argv[1], O_RDONLY);
 	if (verif_fd(fd, error) == 1)
 		return (EXIT_FAILURE);
-	count_line = 0;
 	line = get_next_line(fd);
 	if (!line)
 		return (error->error_g |= ERROR_EMPTY, EXIT_FAILURE);
+	count_line = 0;
 	while (line)
 	{	
 		count_line++;
