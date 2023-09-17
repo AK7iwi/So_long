@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 02:40:06 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/17 04:07:28 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	prestart_game(t_data *data, char **argv)
 		data->map_len_y = count_lines(argv, data->error);
 	if (!data->error->error_g)
 		data->map = cpy_map(argv, data->map_len_y, data->error);
-	if (!data->map)
-		return ;
+	// if (!data->map)
+	// 	return ;
 	if (!data->error->error_g)
 		parsing_map(data, data->map_len_y);
 	if (!data->error->error_g)
@@ -69,6 +69,8 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	prestart_game(&data, argv);
+	// if(!data.map)
+	// 	return (free(data.map), 0);
 	if (!data.error->error_g)
 	{
 		if (!m_mlx_init(&data))
