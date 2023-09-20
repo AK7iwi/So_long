@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 10:30:49 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 10:30:12 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/20 03:55:05 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,21 @@ void	remove_n(char **map)
 		}
 		i++;
 	}
+}
+
+int	is_ber(char **argv)
+{
+	size_t	len;
+
+	len = ft_strlen(argv[1]);
+	if (
+		argv[1][len - 1] != 'r'
+		|| argv[1][len - 2] != 'e'
+		|| argv[1][len - 3] != 'b'
+		|| argv[1][len - 4] != '.'
+		)
+		return (1);
+	return (0);
 }
 
 bool	verif_fd(int fd, t_error *error)

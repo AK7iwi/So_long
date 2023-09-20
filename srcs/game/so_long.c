@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 12:30:01 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/20 05:52:05 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ void	prestart_game(t_data *data, char **argv)
 		reset_matrix_map(data);
 }
 
-int	parsing_file(int argc, char **argv, t_error *error)
+void	parsing_file(int argc, char **argv, t_error *error)
 {
 	int	fd;
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || fd > 1024)
 		error->error_g |= ERROR_FILE;
+	close (fd);
 	if (argc != 2)
 		error->error_g |= ERROR_ARG;
-	if (error->error_g)
-		return (1);
-	return (0);
+	if (is_ber(argv))
+		error->error_g |= ERROR_BER;
 }
 
 int	main(int argc, char **argv)
@@ -65,7 +65,8 @@ int	main(int argc, char **argv)
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&error, sizeof(t_error));
 	data.error = &error;
-	if (parsing_file(argc, argv, data.error) == 1)
+	parsing_file(argc, argv, data.error);
+	if (data.error->error_g)
 	{
 		parsing_msg_error(data.error);
 		return (0);

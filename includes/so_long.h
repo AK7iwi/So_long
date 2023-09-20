@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:41:14 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 02:12:25 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/20 04:37:51 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@
 /* Error code */
 # define ERROR_FILE				0x1
 # define ERROR_ARG				0x2
-# define ERROR_EMPTY			0x4
-# define ERROR_RECT				0x8
-# define ERROR_WALL				0x10
-# define ERROR_POS				0x20
-# define ERROR_EXIT				0x40
-# define ERROR_COL				0x80
-# define ERROR_CHAR				0x100
-# define ERROR_NO_VALID_PATH	0x200
+# define ERROR_BER				0x4
+# define ERROR_EMPTY			0x8
+# define ERROR_RECT				0x10
+# define ERROR_WALL				0x20
+# define ERROR_POS				0x40
+# define ERROR_EXIT				0x80
+# define ERROR_COL				0x100
+# define ERROR_CHAR				0x200
+# define ERROR_NO_VALID_PATH	0x400
 
 /* Keycode */
 # define MOVE_LEFT	65361
@@ -85,7 +86,7 @@ size_t	ft_strlen(char *s);
 char	*ft_strjoin(char *s1, char *s2);
 
 /* Parsing */
-int		parsing_file(int argc, char **argv, t_error *error);
+void	parsing_file(int argc, char **argv, t_error *error);
 void	parsing_map(t_data *data, uint8_t nb_lines);
 void	verif_first_and_last_line(char *str, size_t len, t_error *error);
 void	verif_middles_lines(char *str, size_t len, t_error *error);
@@ -102,6 +103,7 @@ bool	is_valid_path(t_data *data);
 
 /* Utils Parsing */
 bool	verif_fd(int fd, t_error *error);
+int		is_ber(char **argv);
 void	remove_n(char **map);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);

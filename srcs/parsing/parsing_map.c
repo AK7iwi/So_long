@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:49:00 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 02:12:01 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/20 04:40:12 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	parsing_msg_error(t_error *error)
 		ft_putstr_fd("- Incorrect file\n", 1);
 	if (error->error_g & ERROR_ARG)
 		ft_putstr_fd("- Incorrect number of arguments\n", 1);
+	if (error->error_g & ERROR_BER)
+		ft_putstr_fd("- Incorrect file format\n", 1);
 	if (error->error_g & ERROR_EMPTY)
 		ft_putstr_fd("- Incorrect map or empty map\n", 1);
 	if (error->error_g & ERROR_RECT)

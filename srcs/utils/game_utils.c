@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:36:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/17 12:38:19 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/09/20 04:47:24 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char	**cpy_map(char **argv, int nb_lines, t_error *error)
 		i++;
 	}
 	map[i] = NULL;
+	close (fd);
 	return (map);
 }
 
