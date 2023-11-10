@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:41:14 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/09/20 04:37:51 by mfeldman         ###   ########.fr       */
+/*   Updated: 2023/11/10 12:22:55 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,32 @@ int		ft_lignefin(char *buf);
 size_t	ft_strlen(char *s);
 char	*ft_strjoin(char *s1, char *s2);
 
-/* Parsing */
-void	parsing_file(int argc, char **argv, t_error *error);
-void	parsing_map(t_data *data, uint8_t nb_lines);
-void	verif_first_and_last_line(char *str, size_t len, t_error *error);
-void	verif_middles_lines(char *str, size_t len, t_error *error);
-void	count_ex_col_pos(t_data *data, t_error *error);
-void	verif_ex_col_pos(t_error *error);
-void	parsing_msg_error(t_error *error);
+/*Utils Game*/
+int		count_lines(char **argv, t_error *error);
+char	**cpy_map(char **argv, int nb_lines, t_error *error);
+void	find_player_position(t_data *data);
+void	reset_matrix_map(t_data *data);
+void	print_map(t_data *data);
+void	print_block(t_data *data, uint8_t y, uint8_t x);
+void	find_exit_position(t_data *data);
+bool	check_if_coll_are_present(t_data *data);
+void	free_map(t_data *data);
+void	free_mlx(t_data *data);
+
+/*Game */
+void	start_game(t_data *data);
+void	move_player(int keycode, t_data *data);
+void	move_right(t_data *data);
+void	move_left(t_data *data);
+void	move_down(t_data *data);
+void	move_up(t_data *data);
+
+/* Init game */
+void	ft_bzero(void *s, size_t n);
+void	prestart_game(t_data *data, char **argv);
+bool	m_mlx_init(t_data *data);
+bool	img_init(t_data *data);
+bool	img_init2(t_data *data, int verif_wpi, int verif_hpi);
 
 /* Valid path parsing*/
 bool	valid_path_exit(t_data *data, uint8_t player_x, uint8_t player_y);
@@ -109,31 +127,13 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
-/* Init game */
-void	ft_bzero(void *s, size_t n);
-void	prestart_game(t_data *data, char **argv);
-bool	m_mlx_init(t_data *data);
-bool	img_init(t_data *data);
-bool	img_init2(t_data *data, int verif_wpi, int verif_hpi);
-
-/*Game */
-void	start_game(t_data *data);
-void	move_player(int keycode, t_data *data);
-void	move_right(t_data *data);
-void	move_left(t_data *data);
-void	move_down(t_data *data);
-void	move_up(t_data *data);
-
-/*Utils Game*/
-int		count_lines(char **argv, t_error *error);
-char	**cpy_map(char **argv, int nb_lines, t_error *error);
-void	find_player_position(t_data *data);
-void	reset_matrix_map(t_data *data);
-void	print_map(t_data *data);
-void	print_block(t_data *data, uint8_t y, uint8_t x);
-void	find_exit_position(t_data *data);
-bool	check_if_coll_are_present(t_data *data);
-void	free_map(t_data *data);
-void	free_mlx(t_data *data);
+/* Parsing */
+void	parsing_file(int argc, char **argv, t_error *error);
+void	parsing_map(t_data *data, uint8_t nb_lines);
+void	verif_first_and_last_line(char *str, size_t len, t_error *error);
+void	verif_middles_lines(char *str, size_t len, t_error *error);
+void	count_ex_col_pos(t_data *data, t_error *error);
+void	verif_ex_col_pos(t_error *error);
+void	parsing_msg_error(t_error *error);
 
 #endif
