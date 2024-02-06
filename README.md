@@ -12,7 +12,6 @@ Compile the program and run it with a provided map file:
 
 ```
 make
-
 ./so_long maps/map_example.ber
 ```
 
