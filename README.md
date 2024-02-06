@@ -10,7 +10,7 @@ So_Long is a game project that combines graphics programming with basic game mec
 
 Compile the program and run it with a provided map file:
 
-```
+```bash
 make
 ./so_long maps/map_example.ber
 ```
