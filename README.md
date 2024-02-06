@@ -12,9 +12,9 @@ Compile the program and run it with a provided map file:
 
 ```
 make
+
 ./so_long maps/map_example.ber
-
-
+```
 
 [so_long.en.subject.pdf](https://github.com/AK7iwi/So_long/files/14182616/so_long.en.subject.pdf)
 
