@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:41:14 by mfeldman          #+#    #+#             */
-/*   Updated: 2023/11/10 12:22:55 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/02/11 22:36:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define BUFFER_SIZE 42
 
 /* Error code */
-# define ERROR_FILE				0x1
-# define ERROR_ARG				0x2
+# define ERROR_ARG				0x1
+# define ERROR_FILE				0x2
 # define ERROR_BER				0x4
 # define ERROR_EMPTY			0x8
 # define ERROR_RECT				0x10
