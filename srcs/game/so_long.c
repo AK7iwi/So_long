@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/02/11 22:32:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/02/11 22:42:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,23 @@ void	parsing_file(int argc, char **argv, t_error *error)
 	int	fd;
 
 	if (argc != 2)
+	{
 		error->error_g |= ERROR_ARG;
+		return ;
+	}
 	if (ft_strlen(argv[1]) < 5)
+	{
 		error->error_g |= ERROR_FILE;
+		return ;
+	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || fd > 1024)
+	{
 		error->error_g |= ERROR_FILE;
-	close (fd);
+		close (fd);
+		return ;
+	}
+	close(fd);
 	if (is_ber(argv))
 		error->error_g |= ERROR_BER;
 }
