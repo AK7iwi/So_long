@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:17:57 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/02/11 22:42:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/02/12 00:45:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	prestart_game(t_data *data, char **argv)
 		return ;
 	if (!data->error->error_g)
 		data->map = cpy_map(argv, data->map_len_y, data->error);
+	// data->map = NULL;
 	if (!data->map)
-		return ;
+		return ; // wrong protect, see cub3d
 	if (!data->error->error_g)
 		parsing_map(data, data->map_len_y);
 	if (!data->error->error_g)
