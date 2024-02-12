@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 02:36:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/02/12 16:06:21 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:17:33 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ int	count_lines(char **argv, t_error *error)
 	fd = open(argv[1], O_RDONLY);
 	if (verif_fd(fd, error) == 1)
 		return (0);
+	count_line = 0;
 	line = get_next_line(fd);
 	if (!line)
 		return (close(fd), 0);
-	count_line = 0;
 	while (line)
 	{	
 		count_line++;
