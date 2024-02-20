@@ -1,5 +1,7 @@
 # So_Long
 
+
+!NOT FINISHED!
 A simple 2D game implemented in C using the Minilibx graphics library, where the player navigates through a maze, collects items, and exits.
 
 ## Overview
